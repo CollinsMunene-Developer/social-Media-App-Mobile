@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092983347610",
+    "project_id": "socialmediapp-d07c4",
+    "storage_bucket": "socialmediapp-d07c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092983347610:android:aa9c24525cd54084ce4223",
+        "android_client_info": {
+          "package_name": "collinsmunene.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8JR9cdD83ezAZQccVtnLiT3WL0nI1274"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
