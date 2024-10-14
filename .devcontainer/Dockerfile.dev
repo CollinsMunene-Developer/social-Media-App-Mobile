@@ -1,0 +1,51 @@
+FROM ubuntu:20.04
+
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Setup environment
+ENV FLUTTER_ROOT=/opt/flutter
+ENV FLUTTER_VERSION=2.10.0
+ENV PATH=$FLUTTER_ROOT/bin:$PATH
+
+# Install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    unzip \
+    xz-utils \
+    zip \
+    libglu1-mesa \
+    openjdk-8-jdk \
+    wget \
+    clang \
+    cmake \
+    ninja-build \
+    pkg-config \
+    libgtk-3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download Flutter SDK
+RUN git clone https://github.com/flutter/flutter.git $FLUTTER_ROOT
+RUN cd $FLUTTER_ROOT && git checkout $FLUTTER_VERSION
+
+# Run basic check to download Dark SDK
+RUN flutter doctor
+
+# Set up Android SDK
+ENV ANDROID_SDK_ROOT=/opt/android-sdk-linux
+ENV PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+
+RUN mkdir -p ${ANDROID_SDK_ROOT} && cd ${ANDROID_SDK_ROOT} \
+    && wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip \
+    && unzip commandlinetools-linux-*_latest.zip \
+    && rm commandlinetools-linux-*_latest.zip \
+    && mv cmdline-tools latest \
+    && mkdir cmdline-tools \
+    && mv latest cmdline-tools/
+
+RUN yes | sdkmanager --licenses \
+    && sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
+# Switch back to dialog for any ad-hoc use of apt-get
+ENV DEBIAN_FRONTEND=dialog

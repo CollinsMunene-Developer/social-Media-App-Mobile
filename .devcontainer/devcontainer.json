@@ -1,0 +1,22 @@
+{
+    "name": "Flutter Development",
+    "dockerFile": "Dockerfile.dev",
+    "forwardPorts": [3000],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "dart-code.dart-code",
+                "dart-code.flutter"
+            ]
+        }
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "flutter pub get",
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ],
+    "workspaceFolder": "/workspace"
+}
